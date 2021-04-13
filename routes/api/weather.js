@@ -6,7 +6,7 @@ const { pipeline } = require('stream');
 
 // @route GET api/weather/location
 router.get('/:location', function (req, res) {
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${req.params.location}&appid=${config.get('weatherApiKey')}`;
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${req.params.location}&appid=${config.get('weatherApiKey')}&units=imperial`;
     // console.log(url);
     const dataStream = got.stream(url);
     pipeline(dataStream, res, (err) => {

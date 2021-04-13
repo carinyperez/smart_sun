@@ -5,7 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "debug": "node --inspect server.js",
+    "client": "npm start --prefix client",
+    "client-install": "npm install --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Cariny Perez",
   "license": "MIT ",
@@ -17,6 +22,7 @@
     "express": "^4.17.1",
     "got": "^11.8.2",
     "knex": "^0.95.4",
+    "nodemon": "^2.0.7",
     "stream": "^0.0.2"
   }
 }
