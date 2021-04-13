@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-config/deafult.json
+config/default.json
 
 # testing
 /coverage
