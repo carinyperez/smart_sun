@@ -1,8 +1,21 @@
 .weather-container {
     padding: 20px;
-    h1 {
-        text-align: center;
+    h1, h3, svg{
+        text-align: left;
     }
+    svg {
+        width: inherit;
+        height: inherit;
+    }
+    text { 
+        fill: white;
+    }
+    .svg-inline--fa.fa-w-16 {
+        width: 10em;
+        color: orange;
+        text: hello; 
+    }
+    
     .weather {
         display: flex; 
         flex-direction: row; 
