@@ -1,21 +1,23 @@
 import axios from 'axios';
 import './App.css';
+import { withRouter } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import Weather from './components/weather';
 
-const App = () => {
-  const [weatherData, setWeatherData] = useState([]);
+const App = ({ history }) => {
+  const [weatherData, setWeatherData] = useState(false);
   const getWeather = async () => {
-    const weather = await axios.get('/api/weather/oakland');
+    const weather = await axios.get(`${history.location.pathname}`);
     setWeatherData(weather.data);
   }
   useEffect(() => {
     getWeather();
   }, [])
+  // setWeatherData(true)
   return (
-
     <div className="App">
       <header className="App-header">
-        Smart Plan
+        <Weather weatherData={weatherData} />
         {
           console.log(weatherData)
         }
@@ -23,6 +25,6 @@ const App = () => {
     </div>
   );
 }
-export default App;
+export default withRouter(App);
 
 // {weatherData && <p>{weatherData.weather}</p>}
