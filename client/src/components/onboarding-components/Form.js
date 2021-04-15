@@ -1,11 +1,15 @@
 import react from 'react';
 
-export default function Form(props){
-    return(
-        <form onSubmit={props.handleClick}>
+const Form = (props) => {
+    return (
+        <form>
             <h2>{props.question}</h2>
             {props.children}
-            <button type="submit" >{props.last? 'Finish':'Continue'}</button>
+            <button type='submit' onClick={props.handleClick}>
+                {props.last ? 'Finish' : 'Continue'}
+            </button>
         </form>
     )
 }
+
+export default Form;

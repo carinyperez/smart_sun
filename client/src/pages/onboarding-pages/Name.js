@@ -1,18 +1,20 @@
 import react from 'react';
 import OnboardingPage from '../../components/onboarding-components/OnboardingPage';
 
-export default function Name(props){
-    function handleClick(evt){
-        evt.preventDefault()
-        props.handleNameClick()
+
+const Name = (props) => {
+    const handleClick = () => {
+        props.history.push('/onboarding/email');
     }
-    return(
+    return (
         <OnboardingPage
             question="My name is..."
-            handleButtonClick={handleClick}
+            handleClick={handleClick}
             water
             progress="1">
-                <input defaultValue='Blessing' />
-            </OnboardingPage>
+            <input defaultValue='Blessing' />
+        </OnboardingPage>
     )
 }
+
+export default Name;

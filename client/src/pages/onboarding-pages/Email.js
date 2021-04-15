@@ -1,18 +1,19 @@
 import react from 'react';
 import OnboardingPage from '../../components/onboarding-components/OnboardingPage';
 
-export default function Email(props){
-    function handleClick(evt){
-        evt.preventDefault()
-        props.handleNameClick()
+const Email = (props) => {
+    function handleClick() {
+        props.history.push('/onboarding/outdoors');
     }
-    return(
+    return (
         <OnboardingPage
             question="Email"
-            handleButtonClick={handleClick}
+            handleClick={handleClick}
             progress="2"
-            >
-                <input placeholder='Enter your email' />
-            </OnboardingPage>
+        >
+            <input placeholder='Enter your email' />
+        </OnboardingPage>
     )
 }
+
+export default Email;

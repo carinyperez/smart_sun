@@ -2,15 +2,15 @@ import react from 'react';
 import './onboarding.styles.scss';
 import Form from './Form';
 import Image from './Image';
-import ProgressBar from './ProgressBar'
+import ProgressBar from './ProgressBar';
 
-export default function OnboardingPage(props) {
+const OnboardingPage = (props) => {
     return (
         <div className="intro">
             <div className="intro-top">
                 <Form
                     question={props.question}
-                    handleClick={props.handleButtonClick}
+                    handleClick={props.handleClick}
                     last={(props.progress === "5") ? true : false}
                 >
                     {props.children}
@@ -26,3 +26,5 @@ export default function OnboardingPage(props) {
         </div>
     )
 }
+
+export default OnboardingPage;
