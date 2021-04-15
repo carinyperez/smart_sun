@@ -3,7 +3,7 @@ import './introduction.styles.scss';
 import Image from '../onboarding-components/Image';
 import Form from '../onboarding-components/Form'
 import OnboardingPage from '../onboarding-components/OnboardingPage'
-import onboarding from '../../pages/onboarding/onboarding';
+import onboarding from '../../pages/onboarding-pages/onboarding';
 
 const Introduction = () => {
     function handleClick(evt) {
