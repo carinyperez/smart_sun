@@ -8,8 +8,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        // height: 90vh;
+        height: 100vh;
         width: 80vw;
+        background-color: white;
         input {
             width: 10vw;
             // background-color: #009CDF;
@@ -20,9 +21,13 @@
     }
     .intro-bottom {
         display: flex;
+        //width: 100%;
+         background-color: #009CDF;
         // flex: 1 5 200px;
         img {
             height: 70vh;
+            width: 100%;
+            flex: 5 5 auto;
         }
     }
     
