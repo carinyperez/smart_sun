@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #009CDF;
+  /* height: 100vh;  */
 }
 
 .App-logo {
@@ -26,15 +28,6 @@
 
 .App-link {
   color: #61dafb;
-}
-
-img {
-  width: 30%; 
-  height: auto;
-}
-.weatherData {
-  display: flex; 
-  flex-direction: column;
 }
 
 

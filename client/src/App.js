@@ -1,30 +1,20 @@
-import axios from 'axios';
 import './App.css';
-import { withRouter } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import Weather from './components/weather';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import HomePage from './pages/homepage/homepage';
+import Onboarding from './pages/onboarding/onboarding';
+import Introduction from './components/introduction/introduction';
 
-const App = ({ history }) => {
-  const [weatherData, setWeatherData] = useState(false);
-  const getWeather = async () => {
-    const weather = await axios.get(`${history.location.pathname}`);
-    setWeatherData(weather.data);
-  }
-  useEffect(() => {
-    getWeather();
-  }, [])
-  // setWeatherData(true)
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <Weather weatherData={weatherData} />
-        {
-          console.log(weatherData)
-        }
-      </header>
+      <Router>
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/onboarding' component={Onboarding} />
+        {/* <Route exact path='/introduce-yourself' component={Introduction} /> */}
+      </Router>
     </div>
   );
 }
-export default withRouter(App);
+export default App;
 
 // {weatherData && <p>{weatherData.weather}</p>}

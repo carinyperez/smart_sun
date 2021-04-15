@@ -1,0 +1,29 @@
+.intro {
+    margin: 10px 30px;
+    display: flex; 
+    background-color: white;
+    .intro-top {
+        display: flex; 
+        flex: 1 1 auto;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        // height: 90vh;
+        width: 80vw;
+        input {
+            width: 10vw;
+            // background-color: #009CDF;
+            border: none;
+            border-bottom: 1px solid white;
+            padding:2px 2px;
+        }
+    }
+    .intro-bottom {
+        display: flex;
+        // flex: 1 5 200px;
+        img {
+            height: 70vh;
+        }
+    }
+    
+}

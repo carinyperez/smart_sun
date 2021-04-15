@@ -3,7 +3,6 @@ import './weather.styles.scss';
 // get our fontawesome imports
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import plant from '../assets/plant.png'
 
 const Weather = ({ weatherData }) => {
     return (
