@@ -1,0 +1,82 @@
+.intro {
+    border: 2px solid black;
+    margin: 0;
+    display: flex; 
+    background-color: white;
+    .intro-top {
+        display: flex; 
+        flex: 1 1 auto;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 100vh;
+        width: 80vw;
+        background-color: white;
+        input {
+            width: 10vw;
+            // background-color: #009CDF;
+            border: none;
+            border-bottom: 1px solid white;
+            padding:2px 2px;
+        }
+    }
+    .intro-bottom {
+        display: flex;
+        width: 50%;
+         background-color: #009CDF;
+        // flex: 1 5 200px;
+        img {
+            height: 100vh;
+            width: 100%;
+            flex: 5 5 auto;
+        }
+    }
+    
+}
+.progress-background{
+    position: relative;
+
+    background-color: #85DAFE;
+    width: 100%;
+    height: 15px;
+}
+.progress-bar{
+    position: absolute;
+    height: 15px;
+    background-color: #009CDF;
+    width: 20%;
+}
+.progress-bar-1{
+    left: 0;
+}
+.progress-bar-2{
+    left: 25%;
+}
+.progress-bar-3{
+    left: 45%;
+}
+.progress-bar-4{
+    left: 66%;
+}
+.progress-bar-5{
+    right: 0;
+}
+.wake-up__inputs{
+display: flex;
+width: 100%;
+justify-content: space-around;
+}
+label{
+    padding: 10px;
+}
+
+input[type="radio"]{
+    display: none;
+}
+input[type="radio"]:checked + label{
+ background-color: #009CDF;
+}
+
+button{
+    margin: 15px;
+}
