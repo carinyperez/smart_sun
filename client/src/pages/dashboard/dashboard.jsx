@@ -32,6 +32,7 @@ const Dashboard = ({ history }) => {
             } */}
             <SideBar/>
             <div className='dash-images'>
+<<<<<<< HEAD
                 <hr className='line' />
                 <Card
                     name="clock"
@@ -76,8 +77,32 @@ const Dashboard = ({ history }) => {
                         <img src={tips} alt="notifications"/>
                     </Card>
                 
+=======
+                <div className='line'>
+                </div>
+                <div className="dash-time">
+                    <h3>Time for vitamin D</h3>
+                    <p>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
+                    }</p>
+                </div>
+                <div>
+                    <h3>UBV Rays</h3>
+                </div>
+                <div>
+                    <h3>Water Intake</h3>
+                </div>
+                <div>
+                    <h3>Time for vitamin D</h3>
+                </div>
+                <div>
+                    <h3>Today's Meal</h3>
+                </div>
+                <div>
+                    <h3>Daily Tips</h3>
+                </div>
+>>>>>>> dbd7ec4... Updating iot device setup
             </div>
-
+            {/* <Clock className='clock' /> */}
         </div>
     )
 }
