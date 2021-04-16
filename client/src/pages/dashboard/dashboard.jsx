@@ -3,20 +3,25 @@ import Weather from '../../components/weather/weather';
 import axios from 'axios';
 import './dashboard.styles.scss';
 import Clock from '../../components/clock/clock';
-
-
+import Card from '../../components/card/card';
+import foods from '../../assets/foods.png';
+import rays from '../../assets/rays.png';
+import vitamin from '../../assets/vitamin-swirl.png';
+import water from '../../assets/water.png';
+import tips from '../../assets/tips.png';
+import SideBar from '../../components/sidebar/sidebar';
 
 const Dashboard = ({ history }) => {
     const [weatherData, setWeatherData] = useState(false);
-    const getWeather = async () => {
-        // const weather = await axios.get(`${history.location.pathname}`);
-        const weather = await axios.get(`${'/api/weather/oakland'}`);
-        setWeatherData(weather.data);
-    }
-    useEffect(() => {
-        getWeather();
-    }, [])
-    // setWeatherData(true)
+    /* const getWeather = async () => {
+          const weather = await axios.get(`${history.location.pathname}`);
+         const weather = await axios.get(`${'/api/weather/oakland'}`);
+         setWeatherData(weather.data);
+     }
+     useEffect(() => {
+         getWeather();
+     }, [])
+     // setWeatherData(true) */
     return (
 
         <div className='dashboard'>
@@ -25,38 +30,52 @@ const Dashboard = ({ history }) => {
             {
                 console.log(weatherData)
             } */}
-            <div className='dash-text'>
-                <h1>Smart Sun</h1>
-                <p>Dashboard</p>
-                <p>Skin Analyzer</p>
-                <p>Food</p>
-                <p>Exercise Routine</p>
-            </div>
+            <SideBar />
             <div className='dash-images'>
-                <div className='line'>
-                </div>
-                <div className="dash-time">
-                    <h3>Time for vitamin D</h3>
-                    <p>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
-                    }</p>
-                </div>
-                <div>
-                    <h3>UBV Rays</h3>
-                </div>
-                <div>
-                    <h3>Water Intake</h3>
-                </div>
-                <div>
-                    <h3>Time for vitamin D</h3>
-                </div>
-                <div>
-                    <h3>Today's Meal</h3>
-                </div>
-                <div>
-                    <h3>Daily Tips</h3>
-                </div>
+                <div className='line' />
+                <Card
+                    name="clock"
+                    heading="Time for Vitamin D">
+                    <Clock className='clock' />
+                    <h4>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
+                    }</h4>
+                    <p>Time to go out</p>
+                </Card>
+                <Card
+                    name="rays"
+                    heading="UVB Rays">
+                    <img src={rays} alt="temperature gauge" />
+                    <h4>The sun is at it's best</h4>
+                    <p>Goal: 600UI</p>
+                </Card>
+
+                <Card
+                    name="water"
+                    heading="Water Intake"
+                >
+                    <img src={water} alt="water-fill" />
+                    <h4>Take a bottle of water</h4>
+                    <p>50ml</p>
+                </Card>
+                <Card
+                    name="track"
+                    heading="Track your Vitamin D">
+                    <div class="vitamin-meter"><p>Vitamin D</p><div class="border"><div class="progress" style={{ "width": "50%" }} /></div></div>
+                    <img src={vitamin} alt="amount of vitamin D had" />
+                </Card>
+                <Card
+                    name="meal"
+                    heading="Today's Meal">
+                    <img src={foods} alt="food circles" />
+                    <p> Egg Yolk Mushrooms Seafood</p>
+                </Card>
+
+                <Card
+                    name="tips"
+                    heading="Daily Tips">
+                    <img src={tips} alt="notifications" />
+                </Card>
             </div>
-            {/* <Clock className='clock' /> */}
         </div>
     )
 }

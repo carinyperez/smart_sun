@@ -1,0 +1,29 @@
+.dash-text {
+    padding: 0;
+    width: 20vw;
+    max-width: 300px;
+    flex: 1 1 auto;
+    // border: 10px red solid;
+    background-color: #009CDF;
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    color: white;
+    text-align: right;
+    .dash-link{
+        padding: 0 20px 0 15px ;
+        color: white;
+        text-decoration: none;
+        margin: 16px 0;
+    }
+    .dash-link_active{
+        background-color: white;
+        color: #009CDF;
+        border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px;
+        height: 43px;
+        line-height: 43px;
+        
+    }
+}

@@ -8,6 +8,7 @@ import Profession from './pages/onboarding-pages/Profession';
 import WakeUp from './pages/onboarding-pages/WakeUp';
 import Dashboard from './pages/dashboard/dashboard';
 import HomePage from './pages/homepage/homepage';
+import skinAnalyzer from './pages/Skin Analyzer/skinAnalyzer';
 
 
 const App = () => {
@@ -24,7 +25,8 @@ const App = () => {
         <Route exact path='/onboarding/wakeup' component={WakeUp} />
         <Route exact path='/onboarding/profession' component={Profession} />
         <Route exact path='/dashboard' component={Dashboard} />
-      </Switch>
+        <Route path="/skinAnalyzer" component={skinAnalyzer}/>
+        </Switch>
     </div>
   );
 }
