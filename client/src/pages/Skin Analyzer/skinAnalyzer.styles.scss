@@ -1,0 +1,25 @@
+.skin{
+    display: flex;
+}
+.video-container{
+    position: relative;
+    
+}
+video{
+    width: 75%;
+    align-self: center;
+}
+.overlay{
+    position: absolute;
+bottom: 0;
+right: 12.5%;
+background-image: url("../../assets/overlay.png");
+background-repeat: no-repeat;
+background-size: contain;
+background-position: bottom;
+min-height: 500px;
+width: 75%;
+align-self: center;
+margin: auto;
+padding: auto;
+}
