@@ -56,7 +56,7 @@ particle.login({
     password: process.env.PARTICLE_PASSWORD,
 }).then(
     function (data) {
-        console.log(data);
+        // console.log(data);
         // Listen to event stream
         // Specific to my devices
         // Can use device ID if known
@@ -64,14 +64,14 @@ particle.login({
             auth: token,
             deviceId: 'mine',
         }).then(function (stream) {
-            console.log(stream);
+            // console.log(stream);
             // Stream event arrived
             stream.on('event', function (evt) {
                 // Look for location-specific event
                 if (evt.name.startsWith('hook-response/' + config.event_name)) {
                     // Parse out location details
                     var parts = evt.data.split(',');
-                    console.log(parts);
+                    // console.log(parts);
                     // Assemble message
                     var msg = JSON.stringify({
                         id: evt.name.split('/')[2],

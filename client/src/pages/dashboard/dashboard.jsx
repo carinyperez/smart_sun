@@ -30,10 +30,9 @@ const Dashboard = ({ history }) => {
             {
                 console.log(weatherData)
             } */}
-            <SideBar/>
+            <SideBar />
             <div className='dash-images'>
-<<<<<<< HEAD
-                <hr className='line' />
+                <div className='line' />
                 <Card
                     name="clock"
                     heading="Time for Vitamin D">
@@ -45,64 +44,38 @@ const Dashboard = ({ history }) => {
                 <Card
                     name="rays"
                     heading="UVB Rays">
-                        <img src={rays} alt="temperature gauge"/>
-                <h4>The sun is at it's best</h4>
-                <p>Goal: 600UI</p>
+                    <img src={rays} alt="temperature gauge" />
+                    <h4>The sun is at it's best</h4>
+                    <p>Goal: 600UI</p>
                 </Card>
-                
+
                 <Card
                     name="water"
                     heading="Water Intake"
                 >
-                    <img src={water} alt="water-fill"/>
+                    <img src={water} alt="water-fill" />
                     <h4>Take a bottle of water</h4>
                     <p>50ml</p>
                 </Card>
                 <Card
                     name="track"
                     heading="Track your Vitamin D">
-                        <div class="vitamin-meter"><p>Vitamin D</p><div class="border"><div class="progress" style={{"width":"50%"}}/></div></div>
-                        <img src={vitamin} alt="amount of vitamin D had"/>
+                    <div class="vitamin-meter"><p>Vitamin D</p><div class="border"><div class="progress" style={{ "width": "50%" }} /></div></div>
+                    <img src={vitamin} alt="amount of vitamin D had" />
                 </Card>
-                    <Card
+                <Card
                     name="meal"
                     heading="Today's Meal">
-                        <img src={foods} alt="food circles"/>
-                        <p> Egg Yolk Mushrooms Seafood</p>
-                    </Card>
+                    <img src={foods} alt="food circles" />
+                    <p> Egg Yolk Mushrooms Seafood</p>
+                </Card>
 
-                    <Card
+                <Card
                     name="tips"
                     heading="Daily Tips">
-                        <img src={tips} alt="notifications"/>
-                    </Card>
-                
-=======
-                <div className='line'>
-                </div>
-                <div className="dash-time">
-                    <h3>Time for vitamin D</h3>
-                    <p>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
-                    }</p>
-                </div>
-                <div>
-                    <h3>UBV Rays</h3>
-                </div>
-                <div>
-                    <h3>Water Intake</h3>
-                </div>
-                <div>
-                    <h3>Time for vitamin D</h3>
-                </div>
-                <div>
-                    <h3>Today's Meal</h3>
-                </div>
-                <div>
-                    <h3>Daily Tips</h3>
-                </div>
->>>>>>> dbd7ec4... Updating iot device setup
+                    <img src={tips} alt="notifications" />
+                </Card>
             </div>
-            {/* <Clock className='clock' /> */}
         </div>
     )
 }
