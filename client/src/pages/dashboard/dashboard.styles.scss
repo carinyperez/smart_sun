@@ -1,18 +1,32 @@
 .dashboard {
     display: flex;
     .dash-text {
-        padding: 20px;
+        padding: 0;
         width: 20vw;
-        height: 100vw;
         flex: 1 1 auto;
         // border: 10px red solid;
         background-color: #009CDF;
         display: flex; 
         flex-direction: column;
         justify-content: flex-start;
-        align-items: flex-start;
+        align-items: flex-end;
         color: white;
-        text-align: left;
+        text-align: right;
+        .dash-link{
+            padding: 0 20px 0 15px ;
+            color: white;
+            text-decoration: none;
+            margin: 16px 0;
+        }
+        .dash-link_active{
+            background-color: white;
+            color: #009CDF;
+            border-top-left-radius: 50px;
+            border-bottom-left-radius: 50px;
+            height: 43px;
+            line-height: 43px;
+            
+        }
     }
     .dash-images {
         background-color: #e5e5e5;
@@ -20,30 +34,68 @@
         width: 80vw;
         display: flex; 
         flex-wrap: wrap;
-        flex: 3 3 auto;
+        flex: auto;
         align-content: flex-start;
-        .clock {
-            z-index: 10;
-            position: absolute;
-            display: block;
-        }
+        justify-content: space-around;
+        
 
-        div {
+        .dash-card {
+            position: relative;
+            flex-basis: 25%;
             background-color: white;
             margin: 20px 20px;
+            
             h3 {
-                font-size: 12px;
+                text-align: left;
+                margin-left: 2%;
+                font-size: .8em;
                 color: #009CDF;
+            }
+            img{
+                max-width: 150px;
+                max-height: 150px;
+                margin: 0;
             }
         }
         .line {
             height: 1px;
             width: 100%;
             background-color: #009CDF;
-            margin-top: 15%;
+            margin-top: 1%;
+            border: none;
+        }
+        h4{
+            font-size: 1.3em;
+            color: #e70061;
+
         }
         p {
-            margin: 0px 5px;   
+            font-size: 1em;
+         
         }
     }
+}
+.hBKgIC{
+    position: absolute;
+    top:1%;
+    left: 50%;
+    right: 50%;
+}
+.vitamin-meter{
+    display: flex;
+    font-size: .7em;
+    width: 100%;
+    margin: 0 2%;
+    align-content: space-around;
+}
+.border{
+    align-self: center;
+    margin: 0 5px;
+    height: 2px;
+    width: 60%;
+    background-color: gray;
+}
+.progress{
+    height: 2px;
+    background-color: red;
 }
