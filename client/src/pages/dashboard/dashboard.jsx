@@ -35,9 +35,8 @@ const Dashboard = ({ history }) => {
             <div className='dash-images'>
                 <div className='line'>
                 </div>
-                <div>
+                <div className="dash-time">
                     <h3>Time for vitamin D</h3>
-                    <Clock className='clock'/>
                     <p>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
                     }</p>
                 </div>
@@ -57,7 +56,7 @@ const Dashboard = ({ history }) => {
                     <h3>Daily Tips</h3>
                 </div>
             </div>
-
+            {/* <Clock className='clock' /> */}
         </div>
     )
 }

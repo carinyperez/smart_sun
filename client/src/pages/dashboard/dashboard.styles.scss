@@ -22,11 +22,6 @@
         flex-wrap: wrap;
         flex: 3 3 auto;
         align-content: flex-start;
-        .clock {
-            z-index: 10;
-            position: absolute;
-            display: block;
-        }
 
         div {
             background-color: white;

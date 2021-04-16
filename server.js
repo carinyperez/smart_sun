@@ -21,22 +21,8 @@ var Particle = require('particle-api-js');
 var particle = new Particle();
 var token = process.env.PARTICLE_TOKEN;
 
-// login 
-particle
-    .login({
-        username: process.env.PARTICLE_EMAIL,
-        password: process.env.PARTICLE_PASSWORD,
-    })
-    .then(
-        function (data) {
-            console.log('API Login Sucess', data.body.access_token);
-        },
-        function (err) {
-            console.log('Could not log in.', err);
-        }
-    );
 
-// get particle information 
+//get particle information 
 particle
     .getVariable({
         deviceId: process.env.PARTICLE_DEVICE_ID,
@@ -63,6 +49,50 @@ particle
             console.log('Error sending a signal to the device:', err);
         }
     );
+//Get your devices events
+// Login
+particle.login({
+    username: process.env.PARTICLE_EMAIL,
+    password: process.env.PARTICLE_PASSWORD,
+}).then(
+    function (data) {
+        console.log(data);
+        // Listen to event stream
+        // Specific to my devices
+        // Can use device ID if known
+        particle.getEventStream({
+            auth: token,
+            deviceId: 'mine',
+        }).then(function (stream) {
+            console.log(stream);
+            // Stream event arrived
+            stream.on('event', function (evt) {
+                // Look for location-specific event
+                if (evt.name.startsWith('hook-response/' + config.event_name)) {
+                    // Parse out location details
+                    var parts = evt.data.split(',');
+                    console.log(parts);
+                    // Assemble message
+                    var msg = JSON.stringify({
+                        id: evt.name.split('/')[2],
+                        published: evt.published_at,
+                        position: {
+                            lat: parseFloat(parts[0]),
+                            lng: parseFloat(parts[1]),
+                        },
+                        accuracy: parseInt(parts[2])
+                    });
+                    console.log(msg);
+                    // Send to clients
+                    // io.emit( 'location', msg );
+                }
+            });
+        });
+    },
+    function (err) {
+        console.log(err);
+    }
+);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
