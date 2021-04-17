@@ -9,6 +9,7 @@ import WakeUp from './pages/onboarding-pages/WakeUp';
 import Dashboard from './pages/dashboard/dashboard';
 import HomePage from './pages/homepage/homepage';
 import skinAnalyzer from './pages/Skin Analyzer/skinAnalyzer';
+import Final from './pages/onboarding-pages/Final';
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
         <Route exact path='/onboarding/outdoors' component={Outdoors} />
         <Route exact path='/onboarding/wakeup' component={WakeUp} />
         <Route exact path='/onboarding/profession' component={Profession} />
+        <Route exact path='/onboarding/final' component={Final}/>
         <Route exact path='/dashboard' component={Dashboard} />
         <Route path="/skinAnalyzer" component={skinAnalyzer}/>
         </Switch>

@@ -1,0 +1,37 @@
+.onboarding__final{
+    background-image: url('../../assets/onboard-final.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    text-align: left;
+    padding:0 5%;
+    text-shadow: 2px 2px #009CDF ;
+    h2{
+        margin: 6% 0  0 0;
+        color: #FFCF71;
+        font-size: 48px;
+    }
+    h3{
+        max-width: 620px;
+        font-size: 46px;
+        margin: 0;
+    }
+    img{
+        max-width: 350px;
+        width:20%;
+        margin: 1% 0;
+        
+    }
+    button{
+        margin: 0;
+        text-shadow: none;
+        max-width: 250px;
+        background-color: #FF753D;
+        border-radius: 25px;
+        
+    }
+}
