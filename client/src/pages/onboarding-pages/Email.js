@@ -11,7 +11,9 @@ const Email = (props) => {
             handleClick={handleClick}
             progress="2"
         >
-            <input placeholder='Enter your email' />
+            <input placeholder='Enter your email' type="email" />
+            <h2>Create a password</h2>
+            <input placeholder="Password" type="password"/>
         </OnboardingPage>
     )
 }
