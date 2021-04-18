@@ -12,16 +12,16 @@ import tips from '../../assets/tips.png';
 import SideBar from '../../components/sidebar/sidebar';
 
 const Dashboard = ({ history }) => {
-    const [weatherData, setWeatherData] = useState(false);
-    /* const getWeather = async () => {
-          const weather = await axios.get(`${history.location.pathname}`);
-         const weather = await axios.get(`${'/api/weather/oakland'}`);
-         setWeatherData(weather.data);
-     }
-     useEffect(() => {
-         getWeather();
-     }, [])
-     // setWeatherData(true) */
+    // const [weatherData, setWeatherData] = useState(false);
+    // const weather = await axios.get(`${history.location.pathname}`);
+    // const weather = await axios.get(`${'/oakland'}`);
+    // setWeatherData(weather.data);
+    // }
+    // getWeather();
+    // useEffect(() => {
+    //     getWeather();
+    // }, [])
+    // setWeatherData(true) 
     return (
 
         <div className='dashboard'>

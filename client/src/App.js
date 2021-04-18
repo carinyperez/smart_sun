@@ -10,8 +10,6 @@ import Dashboard from './pages/dashboard/dashboard';
 import HomePage from './pages/homepage/homepage';
 import skinAnalyzer from './pages/Skin Analyzer/skinAnalyzer';
 import Final from './pages/onboarding-pages/Final';
-
-
 const App = () => {
   return (
     <div className="App">

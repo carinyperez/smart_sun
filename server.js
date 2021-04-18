@@ -1,104 +1,273 @@
-// Create a node server 
+// Copyright 2015-2016, Google, Inc.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Sample of web sockets for Google App Engine
+// https://github.com/GoogleCloudPlatform/nodejs-docs-samples/tree/master/appengine/websockets
+
+'use strict';
+const http = require('http');
+const request = require('request');
 const express = require('express');
-const cors = require('cors');
-const knex = require('knex');
-require('dotenv').config();
 const app = express();
-const weather = require('./routes/api/weather');
+const expressWs = require('express-ws')(app);
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const Particle = require('particle-api-js');
+const fs = require('fs');
+const { pipeline } = require('stream');
+const got = require('got');
+const cors = require('cors');
 
-// middlewares 
-app.use(express.json({ extended: false }))
-app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send('Home route')
+const particle = new Particle();
+const urlencodedParser = bodyParser.urlencoded({
+    extended: false
 })
+app.use(cors());
+var websocket;
+const ws_port = '50051'; // https://cloud.google.com/shell/docs/limitations#outgoing_connections
+const ws_route = '/ws';
+const config_filename = './config.json'; // API keys go here
+const config = JSON.parse(fs.readFileSync(config_filename, 'utf8'));
 
-// Particle connection 
-var Particle = require('particle-api-js');
-var particle = new Particle();
-var token = process.env.PARTICLE_TOKEN;
+// In order to use websockets on App Engine, you need to connect directly to
+// application instance using the instance's public external IP. This IP can
+// be obtained from the metadata server.
+const METADATA_NETWORK_INTERFACE_URL = 'http://metadata/computeMetadata/v1/' +
+    '/instance/network-interfaces/0/access-configs/0/external-ip';
 
-
-//get particle information 
-particle
-    .getVariable({
-        deviceId: process.env.PARTICLE_DEVICE_ID,
-        name: 'temp',
-        auth: token
-    })
-    .then(function (data) {
-        console.log('Device variable retrieved successfully:', data);
-    }, function (err) {
-        console.log('An error occurred while getting attrs:', err);
-    });
-// signal device 
-particle
-    .signalDevice({
-        deviceId: process.env.PARTICLE_DEVICE_ID,
-        signal: false,
-        auth: token,
-    })
-    .then(
-        function (data) {
-            console.log('The LED is now back to normal:', data);
-        },
-        function (err) {
-            console.log('Error sending a signal to the device:', err);
+function get_external_ip(cb) {
+    const options = {
+        url: METADATA_NETWORK_INTERFACE_URL,
+        headers: {
+            'Metadata-Flavor': 'Google'
         }
-    );
-//Get your devices events
-// Login
-particle.login({
-    username: process.env.PARTICLE_EMAIL,
-    password: process.env.PARTICLE_PASSWORD,
-}).then(
-    function (data) {
-        // console.log(data);
-        // Listen to event stream
-        // Specific to my devices
-        // Can use device ID if known
+    };
+
+    request(options, (err, resp, body) => {
+        if (err || resp.statusCode !== 200) {
+            console.log('Error while talking to metadata server, assuming localhost');
+            cb('localhost');
+            return;
+        }
+        cb(body);
+    });
+}
+
+// session middleware
+// Warning The default server-side session storage, MemoryStore, is purposely not 
+// designed for a production environment. It will leak memory under most conditions, 
+// does not scale past a single process, and is meant for debugging and developing.
+// for a list of compatible, production read stores, see: 
+// https://github.com/expressjs/session#compatible-session-stores
+// or https://cloud.google.com/appengine/docs/flexible/nodejs/using-redislabs-memcache
+app.use(session({
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false, // don't create session until something stored
+    secret: 'shhhh, very very secret',
+}));
+
+// session persisted message middleware
+app.use(function (req, res, next) {
+    var msg = req.session.message;
+    delete req.session.message;
+    res.locals.message = '';
+    if (msg) res.locals.message = '<p class="msg">' + msg + '</p>';
+    next();
+});
+
+// our websocket setup
+app.ws(ws_route, (ws) => {
+    // simply grab the websocket and store so we can call it at a later time
+    // no need for event handling since the client should never be sending 
+    // messages our way 
+    websocket = ws;
+    ws.on('open', function (msg) {
+        console.log('websocket open');
+    });
+    // ws.on('close', function (msg) {
+    //     console.log('websocket close');
+    // });
+    // ws.on('err', function (msg) {
+    //     console.log('websocket error');
+    // });
+    // ws.on('message', function (msg) {
+    //     console.log('websocket msg: ' + JSON.stringify(msg));
+    // });
+});
+
+// default page leads you to login
+app.get('/', (req, res) => {
+    res.send('Home route');
+});
+
+app.get('/login', (req, res) => {
+    res.render("login.ejs");
+});
+
+// logs into particle then set up the event listener
+app.post('/login', urlencodedParser, function (req, res) {
+    console.log('Logging in');
+    particle.login({
+        username: req.body.username,
+        password: req.body.password
+    }).then(function (data) {
+        console.log('logged in. Getting event stream');
+        req.session.token = data.body.access_token;
+        //Get your devices events
         particle.getEventStream({
-            auth: token,
             deviceId: 'mine',
+            auth: req.session.token
         }).then(function (stream) {
-            // console.log(stream);
-            // Stream event arrived
-            stream.on('event', function (evt) {
-                // Look for location-specific event
-                if (evt.name.startsWith('hook-response/' + config.event_name)) {
-                    // Parse out location details
-                    var parts = evt.data.split(',');
-                    // console.log(parts);
-                    // Assemble message
+            console.log('Got event stream.');
+            stream.on('event', function (data) {
+                console.log('Event: ' + JSON.stringify(data));
+                // this is the event handler for particle events
+                // make sure we are only looking at the deviceLocator events
+                if (data.name.startsWith('hook-response/' + config.event_name)) {
+                    var a = data.data.split(",");
+                    // convert strings to numbers: lat, lng, accuracy
+                    a[0] = parseFloat(a[0]);
+                    a[1] = parseFloat(a[1]);
+                    a[2] = parseInt(a[2]);
+                    // get he device id from the name of the event
+                    var device_id = data.name.split("/")[2];
+                    // send the event to the client
                     var msg = JSON.stringify({
-                        id: evt.name.split('/')[2],
-                        published: evt.published_at,
-                        position: {
-                            lat: parseFloat(parts[0]),
-                            lng: parseFloat(parts[1]),
+                        id: device_id,
+                        pub: data.published_at,
+                        pos: {
+                            lat: a[0],
+                            lng: a[1],
                         },
-                        accuracy: parseInt(parts[2])
+                        acc: a[2]
                     });
+                    websocket.send(msg);
                     console.log(msg);
-                    // Send to clients
-                    // io.emit( 'location', msg );
                 }
             });
-        });
+            res.redirect('/map');
+        },
+            function (err) {
+                req.session.message = 'Get stream failed, please try again.' + err.shortErrorDescription;
+                res.redirect('/logout');
+            }
+        );
     },
-    function (err) {
-        console.log(err);
-    }
-);
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
+        function (err) {
+            req.session.message = 'Login failed, please try again. ' + err.shortErrorDescription;
+            res.redirect('/login');
+        }
+    );
 })
 
+app.get('/logout', function (req, res) {
+    // destroy the user's session to log them out
+    // will be re-created next request
+    req.session.destroy(function () {
+        res.redirect('/');
+    });
+});
 
-// Define routes 
-app.use('/api/weather', weather)
+// you have to be logged in to get the map page
+function restrict(req, res, next) {
+    if (req.session.token) {
+        next();
+    } else {
+        req.session.message = 'Access denied! Login required.';
+        res.redirect('/login');
+    }
+}
+
+// render the map page with relevent ip and websocket information
+app.get('/map', restrict, (req, res) => {
+    // render the map page
+    get_external_ip((external_ip) => {
+        console.log('External IP: ' + external_ip);
+        res.render("map.ejs", {
+            external_ip: external_ip,
+            ws_port: ws_port,
+            ws_route: ws_route,
+            map_api_key: config.map_api_key
+        });
+
+    });
+});
+
+function random_float(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function random_int(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// fake the placement of a device, for testing
+// ex: http://localhost:8080/send_event?id=123ABC&pub=2017-03-30T05:00:46.167Z&lat=39.043756699999996&lng=-77.4874416&acc=50
+// for fully random use: http://localhost:8080/send_event
+app.get('/send_event', restrict, (req, res) => {
+    console.log('params: ' + JSON.stringify(req.query));
+    websocket.send(JSON.stringify({
+        id: req.query.id || Math.floor(Math.random() * 16777215).toString(16), // if no id is given create a random one
+        pub: req.query.pub || new Date().toISOString(), // 2017-03-30T05:00:46.167Z
+        pos: {
+            lat: parseFloat(req.query.lat) || random_float(-50.0, 70.0), // random lat and lng if none given
+            lng: parseFloat(req.query.lng) || random_float(-180.0, 180.0)
+        },
+        acc: parseInt(req.query.acc) || random_int(300, 3000) // if no accuracy is given create a  random one
+    }));
+    res.send('Event!!');
+});
+
+// see what the external ip address is
+app.get('/ip', (req, res) => {
+    get_external_ip((external_ip) => {
+        console.log('External IP: ' + external_ip);
+        res.send(externalIp);
+    });
+});
+
+app.get('api/:location', function (req, res) {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${req.params.location}&appid=${config.weatherApiKey}&units=imperial`;
+    //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+    // console.log(url);
+    const dataStream = got.stream(url);
+    pipeline(dataStream, res, (err) => {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+});
+
+
+// lauch our servers
+if (module === require.main) {
+    // Start the websocket server
+    const wsServer = app.listen(ws_port, () => {
+        console.log('Websocket server listening on port %s', wsServer.address().port);
+    });
+    // Additionally listen for non-websocket connections on the default App Engine
+    // port 8080. Using http.createServer will skip express-ws's logic to upgrade
+    // websocket connections.
+    const PORT = process.env.PORT || 5000;
+    http.createServer(app).listen(PORT, () => {
+        console.log(`App listening on port ${PORT}`);
+        console.log('Press Ctrl+C to quit.');
+    });
+}
+
+module.exports = app;
+
