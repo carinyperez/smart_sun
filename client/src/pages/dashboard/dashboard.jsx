@@ -10,6 +10,7 @@ import vitamin from '../../assets/vitamin-swirl.png';
 import water from '../../assets/water.png';
 import tips from '../../assets/tips.png';
 import SideBar from '../../components/sidebar/sidebar';
+import io from 'socket.io-client';
 
 const Dashboard = ({ history }) => {
     // const [weatherData, setWeatherData] = useState(false);
@@ -22,8 +23,14 @@ const Dashboard = ({ history }) => {
     //     getWeather();
     // }, [])
     // setWeatherData(true) 
+    const socketClient = io('http://localhost:5000/');
+    console.log(socketClient);
+    socketClient.on('msg', (evt) => {
+        console.log(socketClient);
+        console.log(evt);
+        // user lat and lng to call weather api 
+    });
     return (
-
         <div className='dashboard'>
             {/* Dashboard
             <Weather weatherData={weatherData} />

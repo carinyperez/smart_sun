@@ -17,6 +17,7 @@
     "react-scripts": "^4.0.3",
     "react-webcam": "^5.2.3",
     "sass": "^1.32.8",
+    "socket.io-client": "^4.0.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
