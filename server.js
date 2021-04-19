@@ -5,6 +5,8 @@ const knex = require('knex');
 require('dotenv').config();
 const app = express();
 const weather = require('./routes/api/weather');
+const users = require('./routes/users')
+const {login, createUser} = require('./controllers/users')
 
 // middlewares 
 app.use(express.json({ extended: false }))
@@ -71,4 +73,7 @@ app.listen(port, () => {
 
 
 // Define routes 
+app.use('/signup', createUser)
+app.use('/login', login)
 app.use('/api/weather', weather)
+app.use('/users', users)
