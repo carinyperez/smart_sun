@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-config/default.json
+# config/default.json
 .env
 
 # testing
@@ -25,7 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # configuration files
-config/config.json
+# config/config.json
 
 # Logs
 logs
