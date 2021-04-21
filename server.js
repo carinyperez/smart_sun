@@ -9,9 +9,11 @@ const axios = require('axios');
 const jsonfile = require('jsonfile');
 config = jsonfile.readFileSync(__dirname + '/config/config.json');
 const users = require('./routes/users')
+
 const {login, createUser} = require('./controllers/users');
 const mongoose = require('mongoose');
 const auth = require('./middleware/auth');
+const { login, createUser } = require('./controllers/users')
 
 const mongoDB = 'mongodb://localhost:27017/smartSun';
 mongoose.connect(mongoDB,{
@@ -71,25 +73,7 @@ particle.getEventStream({
                     }
                 });
                 console.log(msg);
-                // let latitude = msg.position.lat;
-                // let longitude = msg.positon.lng
-                // console.log(latitude, longitude);
                 // send msg to client 
-                const io = require('socket.io')(server, {
-                    cors: {
-                        origin: '*',
-                    }
-                });
-                // let msg = 'hello';
-                io.on('connection', function (socket) {
-                    console.log('New client connected');
-                    // socket.emit('news', { hello: 'world' });
-                    socket.emit('news', msg);
-                });
-                io.on('disconnect', function () {
-                    console.log('disconnected');
-                    socket.emit('disconnected');
-                });
             }
         })
     })
@@ -97,11 +81,21 @@ particle.getEventStream({
         console.log(err);
     })
 
+var tempMsg = { "position": { "lat": 37.8, "lng": -122.27 } }
 
-
-
-
-
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*',
+    }
+});
+io.on('connection', function (socket) {
+    // console.log('New client connected');
+    socket.emit('news', tempMsg);
+});
+io.on('disconnect', function () {
+    // console.log('disconnected');
+    socket.emit('disconnected');
+});
 
 // Define routes 
 app.use('/signup', createUser)

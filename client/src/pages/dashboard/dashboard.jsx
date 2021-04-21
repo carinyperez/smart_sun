@@ -11,80 +11,114 @@ import water from '../../assets/water.png';
 import tips from '../../assets/tips.png';
 import SideBar from '../../components/sidebar/sidebar';
 import io from 'socket.io-client';
+import AirVisual from '../../API/airVisual';
+
 
 const Dashboard = ({ history }) => {
-    // const [weatherData, setWeatherData] = useState(false);
-    // const weather = await axios.get(`${history.location.pathname}`);
-    // const weather = await axios.get(`${'/oakland'}`);
-    // setWeatherData(weather.data);
-    // }
-    // getWeather();
-    // useEffect(() => {
-    //     getWeather();
-    // }, [])
-    // setWeatherData(true) 
-    // const socketClient = io('http://localhost:5000/');
-    // console.log(socketClient);
-    // if (socketClient.connected) {
-    //     socketClient.onmessage('news', function (data) {
-    //         console.log(data);
-    //     });
-    // }
-
+    const [longitute, setLongitude] = useState('');
+    const [latitude, setLatitude] = useState('');
+    const [airPollution, setAirPollution] = useState('');
+    const [temp, setTemp] = useState('');
+    const [city, setCity] = useState('');
+    const socketClient = io.connect('http://localhost:5000/');
+    useEffect(() => {
+        socketClient.on('news', function (data) {
+            setLatitude(data.position.lat);
+            setLongitude(data.position.lng);
+        });
+        const airVisual = new AirVisual(latitude, longitute);
+        console.log(airVisual);
+        airVisual.getInfo()
+            .then((res) => {
+                setAirPollution(res.data.current.pollution.aqius)
+                console.log(res);
+                setTemp(res.data.current.weather.hu);
+                setCity(res.data.city);
+            })
+    }, [])
+    const getClassName = (airPollution) => {
+        if (airPollution >= 0 && airPollution <= 50) {
+            return 'good'
+        } else if (airPollution >= 51 && airPollution <= 100) {
+            return 'moderate'
+        } else if (airPollution >= 101 && airPollution <= 150) {
+            return 'unhealthy'
+        } else {
+            return 'very-unhealthy'
+        }
+    }
     return (
         <div className='dashboard'>
-            {/* Dashboard
-            <Weather weatherData={weatherData} />
-            {
-                console.log(weatherData)
-            } */}
             <SideBar />
             <div className='dash-images'>
+                <div className='header'>
+                    <h1>Good Day Blessing</h1>
+                    <h3>Today's weather is sunny,
+                    <br /> a good day to get some vitamin D</h3>
+                </div>
                 <div className='line' />
                 <Card
+                    name="weather"
+                    heading="Weather">
+                    <p>{temp}° F</p>
+                    <p>{city}</p>
+                    {/* <img src={rays} alt="temperature gauge" /> */}
+                </Card>
+                <Card
+                    name="track"
+                    heading="SmartSun Tracker">
+                    <div class="vitamin-meter">
+                        {/* <div class="border">
+                            <div class="progress" style={{ "width": "50%" }} />
+                        </div> */}
+                        <p>While outside, track the
+                         amount of Vitamin D exposure</p>
+                        <img src={vitamin} alt="amount of vitamin D had" />
+                    </div>
+                </Card>
+                <Card
+                    name="air-quality"
+                    heading="Air quality">
+                    {/* <img src={tips} alt="air quality" /> */}
+                    <p>The air quality is {getClassName(airPollution)}</p>
+                    <p
+                        className={`${getClassName(airPollution)}`}
+                    >{airPollution}</p>
+                </Card>
+                <Card className='clock'
                     name="clock"
                     heading="Time for Vitamin D">
+
                     <Clock className='clock' />
                     <h4>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
                     }</h4>
-                    <p>Time to go out</p>
+                    <div className='clock-footer'>
+                        <p>Time spent outdoors :<span>2 hrs</span></p>
+                        <p>Vitamin D Level :<span>300 UI</span></p>
+                    </div>
+                    
                 </Card>
-                <Card
-                    name="rays"
-                    heading="UVB Rays">
-                    <img src={rays} alt="temperature gauge" />
-                    <h4>The sun is at it's best</h4>
-                    <p>Goal: 600UI</p>
-                </Card>
-
-                <Card
+                {/* <Card
                     name="water"
                     heading="Water Intake"
                 >
                     <img src={water} alt="water-fill" />
                     <h4>Take a bottle of water</h4>
                     <p>50ml</p>
-                </Card>
-                <Card
-                    name="track"
-                    heading="Track your Vitamin D">
-                    <div class="vitamin-meter"><p>Vitamin D</p><div class="border"><div class="progress" style={{ "width": "50%" }} /></div></div>
-                    <img src={vitamin} alt="amount of vitamin D had" />
-                </Card>
-                <Card
+                </Card> */}
+                {/* <Card
                     name="meal"
                     heading="Today's Meal">
                     <img src={foods} alt="food circles" />
                     <p> Egg Yolk Mushrooms Seafood</p>
-                </Card>
-
-                <Card
+                </Card> */}
+                {/* <Card
                     name="tips"
                     heading="Daily Tips">
                     <img src={tips} alt="notifications" />
-                </Card>
+                </Card> */}
             </div>
-        </div>
+        </div >
     )
 }
 export default Dashboard;

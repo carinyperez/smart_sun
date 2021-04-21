@@ -37,12 +37,50 @@
         flex: auto;
         align-content: flex-start;
         justify-content: space-around;
+
+        .vitamin-meter {
+            display: flex;
+            align-items: flex-end;
+            p {
+                text-align: left;
+                color: #FF0707;
+                line-height: 1.75em;
+                font-weight: bolder;
+            }
+            img {
+                height: 50%;
+            }
+        }
+        .good {
+            background-color: green;
+        }
+        .moderate {
+            background-color: yellow;
+        }
+        .unhealthy {
+            background-color: orange;
+        }
+        .very-unhealthy {
+            background-color: purple;
+        }
+        .header {
+            width: 100vw;
+            margin-left: 5%;
+            h1,h3 {
+                text-align: left;
+            }
+            h3 {
+                font-size: .8em;
+                line-height: 2em;
+                color: #009CDF;
+            }
+        }
+    
         .dash-card {
             position: relative;
-            flex-basis: 25%;
+            flex:  1 1 30%; 
             background-color: white;
             margin: 20px 20px;
-            
             h3 {
                 text-align: left;
                 margin-left: 2%;
@@ -53,6 +91,12 @@
                 max-width: 150px;
                 max-height: 150px;
                 margin: 0;
+            }
+        }
+        .dash-card.dash-clock {
+            span {
+                color: #E70061;
+                font-weight: bolder;
             }
         }
         .line {
@@ -97,3 +141,4 @@
     height: 2px;
     background-color: red;
 }
+
