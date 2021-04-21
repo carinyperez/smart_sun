@@ -10,19 +10,14 @@ const jsonfile = require('jsonfile');
 config = jsonfile.readFileSync(__dirname + '/config/config.json');
 const path = require('path');
 const users = require('./routes/users');
-
 const { login, createUser } = require('./controllers/users');
 const mongoose = require('mongoose');
 const auth = require('./middleware/auth');
+const db = require('./config/db');
 
-const mongoDB = 'mongodb://localhost:27017/smartSun';
-const db = mongoose.connect(mongoDB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-})
-console.log(db);
+
+// connect database 
+db(); 
 // middlewares 
 app.use(express.json({ extended: false }))
 app.use(express.urlencoded({ extended: false }))
@@ -32,6 +27,7 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.send('Home route')
 })
+
 
 // serve static assets in production 
 if (process.env.NODE_ENV === 'production') {
