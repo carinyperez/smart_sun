@@ -23,13 +23,14 @@ const Dashboard = ({ history }) => {
     //     getWeather();
     // }, [])
     // setWeatherData(true) 
-    const socketClient = io('http://localhost:5000/');
-    console.log(socketClient);
-    socketClient.on('msg', (evt) => {
-        console.log(socketClient);
-        console.log(evt);
-        // user lat and lng to call weather api 
-    });
+    // const socketClient = io('http://localhost:5000/');
+    // console.log(socketClient);
+    // if (socketClient.connected) {
+    //     socketClient.onmessage('news', function (data) {
+    //         console.log(data);
+    //     });
+    // }
+
     return (
         <div className='dashboard'>
             {/* Dashboard

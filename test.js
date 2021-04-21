@@ -1,6 +1,6 @@
-let arr = [{id: 800, main: "Clear", description: "clear sky", icon: "01n"}]; 
+let data = {"published":"2021-04-20T21:58:01.792Z","position":{"lat":37.8134,"lng":-122.293907}}
 
-console.log(arr[0].description); 
+console.log(data.position.lat); 
 
 
 

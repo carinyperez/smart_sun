@@ -9,7 +9,6 @@ const axios = require('axios');
 const jsonfile = require('jsonfile');
 config = jsonfile.readFileSync(__dirname + '/config/config.json');
 
-
 // middlewares 
 app.use(express.json({ extended: false }))
 app.use(express.urlencoded({ extended: false }))
@@ -37,7 +36,6 @@ particle.login({
     password: process.env.PARTICLE_PASSWORD,
 
 })
-
 particle.getEventStream({
     auth: token,
     deviceId: deviceId,
@@ -55,33 +53,44 @@ particle.getEventStream({
                     id: evt.name.split('/')[2],
                     published: evt.published_at,
                     position: {
-                        lat: 37.80,
-                        lng: -122.27
-                        // lat: parseFloat(parts[0]),
-                        // lng: parseFloat(parts[1]),
-                    },
-                    accuracy: parseInt(parts[2])
+                        // lat: 37.80,
+                        // lng: -122.27,
+                        lat: parseFloat(parts[0]),
+                        lng: parseFloat(parts[1]),
+                    }
                 });
-                // const msg2 = 'hello';
+                console.log(msg);
+                // let latitude = msg.position.lat;
+                // let longitude = msg.positon.lng
+                // console.log(latitude, longitude);
                 // send msg to client 
-                io.on("connection", socket => {
-                    // either with send()
+                const io = require('socket.io')(server, {
+                    cors: {
+                        origin: '*',
+                    }
+                });
+                // let msg = 'hello';
+                io.on('connection', function (socket) {
                     console.log('New client connected');
-                    socket.send("Hello!");
-                    socket.emit('msg', msg.position.lat, msg.positon.lng);
+                    // socket.emit('news', { hello: 'world' });
+                    socket.emit('news', msg);
+                });
+                io.on('disconnect', function () {
+                    console.log('disconnected');
+                    socket.emit('disconnected');
                 });
             }
         })
     })
     .catch(function (err) {
-        callback(err);
+        console.log(err);
     })
 
-const io = require('socket.io')(server, {
-    cors: {
-        origin: '*',
-    }
-});
+
+
+
+
+
 
 // Define routes 
 app.use('/api/weather', weather)
