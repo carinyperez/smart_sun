@@ -8,6 +8,8 @@ const weather = require('./routes/api/weather');
 const axios = require('axios');
 const jsonfile = require('jsonfile');
 config = jsonfile.readFileSync(__dirname + '/config/config.json');
+const users = require('./routes/users')
+const {login, createUser} = require('./controllers/users')
 
 // middlewares 
 app.use(express.json({ extended: false }))
@@ -93,4 +95,7 @@ particle.getEventStream({
 
 
 // Define routes 
+app.use('/signup', createUser)
+app.use('/login', login)
 app.use('/api/weather', weather)
+app.use('/users', users)

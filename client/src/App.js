@@ -10,8 +10,33 @@ import Dashboard from './pages/dashboard/dashboard';
 import HomePage from './pages/homepage/homepage';
 import skinAnalyzer from './pages/Skin Analyzer/skinAnalyzer';
 import Final from './pages/onboarding-pages/Final';
+import { useEffect, useState } from 'react';
+import AirVisual from './API/airVisual';
 
 const App = () => {
+
+  const [longitute, setLongitude] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [airPollution, setAirPollution] = useState('');
+
+  useEffect(()=>{
+    navigator.geolocation.getCurrentPosition((function(position){
+      setLatitude(position.coords.latitude)
+      setLongitude(position.coords.longitude)
+      console.log("Latitute is : ", position.coords.latitude)
+      console.log("Longitude is : ", position.coords.longitude)
+    }));
+    
+    const airVisual = new AirVisual(latitude, longitute);
+
+    airVisual.getInfo()
+    .then((res)=>{
+      setAirPollution(res.data.current.pollution.aqius)
+      console.log(res)
+    console.log(res.data.current.pollution);
+    console.log(res.data.current.weather)
+    })
+  })
   return (
     <div className="App">
       {/* Switch renders exact matches */}
