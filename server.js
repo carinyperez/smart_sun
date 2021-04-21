@@ -9,8 +9,19 @@ const axios = require('axios');
 const jsonfile = require('jsonfile');
 config = jsonfile.readFileSync(__dirname + '/config/config.json');
 const users = require('./routes/users')
+
+const {login, createUser} = require('./controllers/users');
+const mongoose = require('mongoose');
+const auth = require('./middleware/auth');
 const { login, createUser } = require('./controllers/users')
 
+const mongoDB = 'mongodb://localhost:27017/smartSun';
+mongoose.connect(mongoDB,{
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true
+})
 // middlewares 
 app.use(express.json({ extended: false }))
 app.use(express.urlencoded({ extended: false }))
@@ -90,4 +101,4 @@ io.on('disconnect', function () {
 app.use('/signup', createUser)
 app.use('/login', login)
 app.use('/api/weather', weather)
-app.use('/users', users)
+app.use('/users', auth, users)
