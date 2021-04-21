@@ -1,6 +1,5 @@
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
-import Onboarding from './pages/onboarding/onboarding';
 import Name from './pages/onboarding-pages/Name';
 import Email from './pages/onboarding-pages/Email';
 import Outdoors from './pages/onboarding-pages/Outdoors';
@@ -42,9 +41,7 @@ const App = () => {
       {/* Switch renders exact matches */}
       <Switch>
         <Route exact path='/' component={HomePage} />
-        <Route exact path='/onboarding' component={Onboarding} />
-        <Route exact path='/onboarding' component={Onboarding} />
-        <Route exact path='/onboarding/name' component={Name} />
+        <Route exact path='/onboarding' component={Name} />
         <Route exact path='/onboarding/email' component={Email} />
         <Route exact path='/onboarding/outdoors' component={Outdoors} />
         <Route exact path='/onboarding/wakeup' component={WakeUp} />

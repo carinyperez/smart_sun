@@ -17,5 +17,4 @@ const Email = (props) => {
         </OnboardingPage>
     )
 }
-
 export default Email;

@@ -1,7 +1,6 @@
 import react from 'react';
 import OnboardingPage from '../../components/onboarding-components/OnboardingPage';
 
-
 const Name = (props) => {
     const handleClick = () => {
         props.history.push('/onboarding/email');
@@ -16,5 +15,4 @@ const Name = (props) => {
         </OnboardingPage>
     )
 }
-
 export default Name;
