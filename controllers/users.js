@@ -25,15 +25,18 @@ module.exports.getCurrentUser = (req, res) => {
 
 module.exports.createUser = (req, res) => {
     const { email, password, name } = req.body;
+    console.log(req.body)
     if (!isEmail(email)) {
-        throw new Error("invalid data passed to the methods for creating a user")
+        throw new Error("Not an email | invalid data passed to the methods for creating a user")
     }
     bcrypt.hash(password, 10)
         .then((hash) => {
             User.create({ email, password: hash, name, })
         })
         .then((user) => {
+            console.log(user)
             if (!user) {
+                console.log(user)
                 throw new Error("invalid data passed to the methods for creating a user")
             } res.status(201).send({
                 _id: user._id,
@@ -60,7 +63,7 @@ module.exports.login = (req, res) => {
             if (!user) {
                 throw new Error("Incorrect Email or Password");
             }
-            const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECERET : 'super-strong-seceret', { expiresIn: '7d' });
+            const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret', { expiresIn: '7d' });
             res.cookie('jwt', token, {
                 maxAge: 36000000 * 24 * 7,
                 httpOnly: true,
