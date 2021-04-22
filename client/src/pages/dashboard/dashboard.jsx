@@ -20,7 +20,6 @@ const Dashboard = (props) => {
     const [airPollution, setAirPollution] = useState(10);
     const [temp, setTemp] = useState(80);
     const [city, setCity] = useState();
-    const socketClient = io.connect('http://localhost:5000/');
     useEffect(() => {
         if (process.env.NODE_ENV === 'development') {
             // const socketClient = io.connect('http://localhost:5000/');
