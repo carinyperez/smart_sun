@@ -16,17 +16,12 @@ const auth = require('./middleware/auth');
 const db = require('./config/db');
 
 // connect database 
-const corsOptions = {
-    "Access-Control-Allow-Origin": '*',
-    optionsSuccessStatus: 200,
-  };
-
 db(); 
 // middlewares 
 app.use(express.json({ extended: false }))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use( '*', cors(corsOptions));
+app.use(cors());
 
 
 
