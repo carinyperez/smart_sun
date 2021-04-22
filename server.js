@@ -21,7 +21,7 @@ db();
 app.use(express.json({ extended: false }))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use( '*', cors());
+app.use('*', cors());
 
 
 
@@ -84,11 +84,15 @@ particle.getEventStream({
 
 var tempMsg = { "position": { "lat": 37.8, "lng": -122.27 } }
 
-const io = require('socket.io')(server, {
-    cors: {
-        origin: '*',
-    }
-});
+var io = require('socket.io')(server,
+    {
+        cors: {
+            origin: '*',
+        }
+    })
+
+// io.set('transports', ["websocket", "polling"]);
+
 io.on('connection', function (socket) {
     // console.log('New client connected');
     socket.emit('news', tempMsg);

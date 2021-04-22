@@ -20,6 +20,7 @@ const Dashboard = (props) => {
     const [temp, setTemp] = useState(80);
     const [city, setCity] = useState('Oakland');
     const socketClient = io.connect('http://localhost:5000/');
+    console.log(process.env.NODE_ENV);
     useEffect(() => {
         if (process.env.NODE_ENV === 'development') {
             const socketClient = io.connect('http://localhost:5000/');
