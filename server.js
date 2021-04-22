@@ -83,8 +83,6 @@ particle.getEventStream({
         console.log(err);
     })
 
-
-
 var io = require('socket.io')(server,
     {
         cors: {

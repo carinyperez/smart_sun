@@ -24,7 +24,6 @@ const Dashboard = (props) => {
         if (process.env.NODE_ENV === 'development') {
             // const socketClient = io.connect('http://localhost:5000/');
             const socketClient = io.connect('http://localhost:5000/', {
-                upgrade: false,
                 transport: ['websocket']
             })
             console.log(socketClient);
@@ -45,7 +44,6 @@ const Dashboard = (props) => {
 
         if (process.env.NODE_ENV === 'production') {
             const socketClient = io.connect('https://smart-sun-app.herokuapp.com/', {
-                upgrade: false,
                 transport: ['websocket']
             })
             // const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
