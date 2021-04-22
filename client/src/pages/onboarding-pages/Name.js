@@ -1,9 +1,15 @@
-import react from 'react';
+import react, { useState } from 'react';
 import OnboardingPage from '../../components/onboarding-components/OnboardingPage';
-
+import { useHistory } from 'react-router-dom'
 const Name = (props) => {
-    const handleClick = () => {
-        props.history.push('/onboarding/email');
+    let history = useHistory();
+    const [name, setName] = useState('')
+    const handleClick = async() => {
+        await props.onButtonClick(name)
+        history.push('/onboarding/email');
+    }
+    const handleChange = (e) => {
+        setName(e.target.value)
     }
     return (
         <OnboardingPage
@@ -11,7 +17,7 @@ const Name = (props) => {
             handleClick={handleClick}
             water
             progress="1">
-            <input defaultValue='Blessing' />
+            <input placeholder='Blessing' value={name} onChange={handleChange} />
         </OnboardingPage>
     )
 }

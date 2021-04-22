@@ -1,7 +1,11 @@
 export default class UserManagement {
+    constructor(baseUrl="https://localHost:5000/"){
+        this._baseUrl = baseUrl;
+    }
     register(email, password, name) {
-        fetch('https://localHost:5000/signup', {
+        fetch(`${this._baseUrl}signup`, {
             method: "POST",
+            mode: 'no-cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
@@ -18,8 +22,9 @@ export default class UserManagement {
     };
 
     signIn(email, password) {
-        fetch('https://localHost:5000/login', {
+        fetch(`${this._baseUrl}login`, {
             method: "POST",
+            mode: 'no-cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
@@ -40,8 +45,9 @@ export default class UserManagement {
     };
 
     checkToken(token) {
-        fetch('https://localHost:5000/users/me', {
+        fetch(`${this._baseUrl}users/me`, {
             method: "GET",
+            mode: 'no-cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json',
@@ -57,8 +63,9 @@ export default class UserManagement {
 
     };
     updateAvatar(avatar) {
-        fetch('https://localHost:5000/users/me/avatar', {
+        fetch(`${this._baseUrl}users/me/avatar`, {
             method: "PATCH",
+            mode: 'no-cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'

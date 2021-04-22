@@ -7,7 +7,7 @@ const HomePage = () => {
             <div className="home__text">
                 <h1>Welcome to Smart Sun</h1>
                 <p>Let's start your journey to a healthy life now</p>
-                <Link to="/onboarding/name"><button>Sign Up</button></Link>
+                <Link to="/onboarding/"><button>Sign Up</button></Link>
                 <p>Have an account? <Link to="/dashboard">Sign in</Link></p>
             </div>
         </div>

@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const bcrypt = require('bcryptjs');
-
-// var db = mongoose.createConnection('localhost', 'test');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -14,15 +11,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        validate: {
-            validator: (v) => validator.isEmail(v),
-            message: 'Wrong email format',
-        },
     },
     password: {
         type: String,
         required: true,
-        minlength: 8,
         select: false,
     },
     avatar: {
@@ -53,5 +45,5 @@ userSchema.statics.findUserByCredentials = function (email, password) {
 
 
 module.exports = mongoose.model('User', userSchema)
-// module.exports = db.model('User', userSchema)
+
 

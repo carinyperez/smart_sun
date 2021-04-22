@@ -7,8 +7,9 @@ class AirVisual {
         this._lon = lon;
     }
     getInfo() {
-        return fetch(`http://api.airvisual.com/v2/nearest_city?lat=${this._lat}&lon=${this._lon}&key=${airVisualKey}`)
-            // return fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this._lat}&lon=${this._lon}&appid=${weather_api_key}`)
+        return fetch(`https://api.airvisual.com/v2/nearest_city?lat=${this._lat}&lon=${this._lon}&key=${airVisualKey}`,
+            { mode: "cors" })
+             //return fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${this._lat}&lon=${this._lon}&appid=${weather_api_key}`)
             .then((res) => res.ok ? res.json() : Promise.reject("Error!" + res.status + res.statusText))
     }
 }
