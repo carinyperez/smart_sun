@@ -6,14 +6,7 @@ class AirVisual {
         this._lon = lon;
     }
     getInfo() {
-        return fetch(`https://api.airvisual.com/v2/nearest_city?lat=${this._lat}&lon=${this._lon}&key=${airVisualKey}`, {
-            mode: 'no-cors',
-            header: {
-                'Access-Control-Allow-Origin': '*',
-            }
-        }).then((res) => res.ok ? res.json() : Promise.reject("Error!" + res.status + res.statusText)).catch((err) => {
-            console.log(err)
-        })
+        return fetch(`https://api.airvisual.com/v2/nearest_city?lat=${this._lat}&lon=${this._lon}&key=${airVisualKey}`).then((res) => res.ok ? res.json() : Promise.reject("Error!" + res.status + res.statusText))
     }
 }
 export default AirVisual
