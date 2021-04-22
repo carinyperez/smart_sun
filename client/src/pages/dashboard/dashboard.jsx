@@ -30,17 +30,20 @@ const Dashboard = (props) => {
             })
             console.log(socketClient);
             socketClient.on('news', (data) => {
-                if(data) {
+                if (data) {
                     setLatitude(data.position.lat);
                     setLongitude(data.position.lng);
                 }
             })
         } else if (process.env.NODE_ENV === 'production') {
-            const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
-
+            const socketClient = io.connect('https://smart-sun-app.herokuapp.com/', {
+                upgrade: false,
+                transport: ['websocket']
+            })
+            // const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
             console.log(socketClient);
             socketClient.on('news', (data) => {
-                if(data) {
+                if (data) {
                     console.log(data);
                     setLatitude(data.position.lat);
                     setLongitude(data.position.lng);
