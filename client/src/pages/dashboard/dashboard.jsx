@@ -31,11 +31,20 @@ const Dashboard = (props) => {
             console.log(socketClient);
             socketClient.on('news', (data) => {
                 if (data) {
+                    console.log(`Data ${data}`);
                     setLatitude(data.position.lat);
                     setLongitude(data.position.lng);
                 }
             })
-        } else if (process.env.NODE_ENV === 'production') {
+        }
+        else {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setLatitude(position.coords.latitude);
+                setLongitude(position.coords.longitute);
+            })
+        }
+
+        if (process.env.NODE_ENV === 'production') {
             const socketClient = io.connect('https://smart-sun-app.herokuapp.com/', {
                 upgrade: false,
                 transport: ['websocket']
@@ -44,12 +53,13 @@ const Dashboard = (props) => {
             console.log(socketClient);
             socketClient.on('news', (data) => {
                 if (data) {
-                    console.log(data);
+                    console.log(`Data ${data}`);
                     setLatitude(data.position.lat);
                     setLongitude(data.position.lng);
                 }
             })
-        } else {
+        }
+        else {
             navigator.geolocation.getCurrentPosition((position) => {
                 setLatitude(position.coords.latitude);
                 setLongitude(position.coords.longitute);
