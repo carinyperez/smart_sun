@@ -1,10 +1,10 @@
-import react, { useState } from 'react';
+import React, { useState } from 'react';
 import OnboardingPage from '../../components/onboarding-components/OnboardingPage';
 import { useHistory } from 'react-router-dom'
 const Name = (props) => {
     let history = useHistory();
     const [name, setName] = useState('')
-    const handleClick = async() => {
+    const handleClick = async () => {
         await props.onButtonClick(name)
         history.push('/onboarding/email');
     }

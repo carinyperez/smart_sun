@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import Webcam from "react-webcam"
 import SideBar from '../../components/sidebar/sidebar';
 import './skinAnalyzer.styles.scss'
@@ -10,10 +10,10 @@ export default function skinAnalyzer() {
         <div>
             <div className="video-container">
                 <Webcam
-            mirrored="true" />
-            <div className="overlay"/>
+                    mirrored="true" />
+                <div className="overlay" />
             </div>
-            
+
             <img src={skinChart} alt="qualities of skin" />
         </div>
     </div>

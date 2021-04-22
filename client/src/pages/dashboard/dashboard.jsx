@@ -22,13 +22,13 @@ const Dashboard = (props, { history }) => {
     const [city, setCity] = useState('');
     const socketClient = io.connect('http://localhost:5000/');
     useEffect(() => {
-        if(socketClient){
-        socketClient.on('news', function (data) {
-            setLatitude(data.position.lat);
-            setLongitude(data.position.lng);
-        });}
-        if(!socketClient){
-            navigator.geolocation.getCurrentPosition((position)=>{
+        if (process.env.NODE_ENV === 'development') {
+            socketClient.on('news', function (data) {
+                setLatitude(data.position.lat);
+                setLongitude(data.position.lng);
+            })
+        } else {
+            navigator.geolocation.getCurrentPosition((position) => {
                 setLatitude(position.coords.latitude);
                 setLongitude(position.coords.longitute)
             })
@@ -41,7 +41,7 @@ const Dashboard = (props, { history }) => {
                 setTemp(res.data.current.weather.hu);
                 setCity(res.data.city);
             })
-            .catch(err=>{console.log(err)})
+            .catch(err => { console.log(err) })
     }, [])
     const getClassName = (airPollution) => {
         if (airPollution >= 0 && airPollution <= 50) {

@@ -1,12 +1,12 @@
-import react from 'react';
+import React from 'react';
 import './final.styles.scss'
 import stats from '../../assets/calculated-needs.png'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 export default function Final(props) {
     const history = useHistory()
-     function handleClick() {
-       // await props.onButtonClick()
+    function handleClick() {
+        // await props.onButtonClick()
         history.push('/dashboard');
     }
     return (

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import OnboardingPage from '../../components/onboarding-components/OnboardingPage';
 import { useHistory } from 'react-router-dom';

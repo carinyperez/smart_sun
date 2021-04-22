@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import OnboardingPage from '../../components/onboarding-components/OnboardingPage';
 
 export default function Outdoors(props) {

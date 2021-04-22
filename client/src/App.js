@@ -29,36 +29,13 @@ const App = () => {
     setPassword(password);
     console.log(email + password)
   }
- /* function onFinish() {
-    console.log(email, password, username)
-   console.log(userManagement.register)
-    userManagement.register({ email, password, 'name': username })
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
-  }*/
-
-  // const [longitute, setLongitude] = useState('');
-  // const [latitude, setLatitude] = useState('');
-  // const [airPollution, setAirPollution] = useState('');
-
-  // useEffect(()=>{
-  //   navigator.geolocation.getCurrentPosition((function(position){
-  //     setLatitude(position.coords.latitude)
-  //     setLongitude(position.coords.longitude)
-  //     console.log("Latitute is : ", position.coords.latitude)
-  //     console.log("Longitude is : ", position.coords.longitude)
-  //   }));
-
-  //   const airVisual = new AirVisual(latitude, longitute);
-
-  //   airVisual.getInfo()
-  //   .then((res)=>{
-  //     setAirPollution(res.data.current.pollution.aqius)
-  //     console.log(res)
-  //   console.log(res.data.current.pollution);
-  //   console.log(res.data.current.weather)
-  //   })
-  // })
+  /* function onFinish() {
+     console.log(email, password, username)
+    console.log(userManagement.register)
+     userManagement.register({ email, password, 'name': username })
+       .then(res => console.log(res))
+       .catch(err => console.log(err))
+   }*/
   return (
     <div className="App">
       {/* Switch renders exact matches */}
@@ -71,8 +48,8 @@ const App = () => {
         <Route exact path='/onboarding/outdoors' component={Outdoors} />
         <Route exact path='/onboarding/wakeup' component={WakeUp} />
         <Route exact path='/onboarding/profession' component={Profession} />
-        <Route exact path='/onboarding/final' component={() => <Final/>} />
-        <Route exact path='/dashboard' component={()=><Dashboard name={username}/>} />
+        <Route exact path='/onboarding/final' component={() => <Final />} />
+        <Route exact path='/dashboard' component={() => <Dashboard name={username} />} />
         <Route path="/skinAnalyzer" component={skinAnalyzer} />
       </Switch>
     </div>
