@@ -26,16 +26,23 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        const socketClient = io.connect('http://localhost:5000/');
         if (process.env.NODE_ENV === 'development') {
+            const socketClient = io.connect('http://localhost:5000/');
             socketClient.on('news', (data) => {
                 this.setState({ latitude: data.position.lat });
                 this.setState({ longitude: data.position.lng });
             })
-        } else {
+        } else if (process.env.NODE_ENV === 'production') {
+            const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
+            socketClient.on('news', (data) => {
+                this.setState({ latitude: data.position.lat });
+                this.setState({ longitude: data.position.lng });
+            })
+        }
+        else {
             navigator.geolocation.getCurrentPosition((position) => {
                 this.setState({ latitude: position.coords.latitude });
-                this.setState({ longitude: position.coords.longitute})
+                this.setState({ longitude: position.coords.longitute })
             })
         }
         const airVisual = new AirVisual(this.state.latitude, this.state.longitute);
