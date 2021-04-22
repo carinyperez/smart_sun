@@ -44,6 +44,7 @@ var particle = new Particle();
 var token = process.env.PARTICLE_TOKEN;
 var deviceId = process.env.PARTICLE_DEVICE_ID;
 
+let msg = '';
 // Login
 particle.login({
     username: process.env.PARTICLE_EMAIL,
@@ -63,7 +64,7 @@ particle.getEventStream({
                 // Parse out location details
                 var parts = evt.data.split(',');
                 // Assemble message
-                var msg = JSON.stringify({
+                msg = JSON.stringify({
                     id: evt.name.split('/')[2],
                     published: evt.published_at,
                     position: {
@@ -82,19 +83,26 @@ particle.getEventStream({
         console.log(err);
     })
 
-var tempMsg = { "position": { "lat": 37.8, "lng": -122.27 } }
+
 
 var io = require('socket.io')(server,
     {
         cors: {
             origin: '*',
-        }
+        },
+        transport: ['websocket']
     })
 
+console.log(msg)
+var tempMsg = { "position": { "lat": 37.8, "lng": -122.27 } }
+
+if (msg === ' ') {
+    msg = tempMsg;
+}
 
 io.on('connection', function (socket) {
     // console.log('New client connected');
-    socket.emit('news', tempMsg);
+    socket.emit('news', msg);
 });
 io.on('disconnect', function () {
     // console.log('disconnected');
