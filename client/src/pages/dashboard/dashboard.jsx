@@ -28,7 +28,7 @@ const Dashboard = (props) => {
             })
             console.log(socketClient);
             socketClient.on('news', (data) => {
-                if (data) {
+                if (JSON.stringify(data) === '{}') {
                     console.log(`Data ${data}`);
                     setLatitude(data.position.lat);
                     setLongitude(data.position.lng);
@@ -49,7 +49,7 @@ const Dashboard = (props) => {
             // const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
             console.log(socketClient);
             socketClient.on('news', (data) => {
-                if (data) {
+                if (JSON.stringify(data) === '{}') {
                     console.log(`Data ${data}`);
                     setLatitude(data.position.lat);
                     setLongitude(data.position.lng);
