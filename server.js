@@ -16,23 +16,15 @@ const auth = require('./middleware/auth');
 const db = require('./config/db');
 
 // connect database 
-const corsOptions = {
-    "Access-Control-Allow-Origin": '*',
-    optionsSuccessStatus: 200,
-  };
-
-db(); 
+db();
 // middlewares 
 app.use(express.json({ extended: false }))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use( '*', cors(corsOptions));
+app.use( '*', cors());
 
 
 
-app.get('/', (req, res) => {
-    res.send('Home route')
-})
 
 // serve static assets in production 
 if (process.env.NODE_ENV === 'production') {
@@ -111,3 +103,4 @@ app.use('/signup', createUser)
 app.use('/login', login)
 app.use('/api/weather', weather)
 app.use('/users', auth, users)
+
