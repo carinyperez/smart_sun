@@ -23,9 +23,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send('Home route')
-})
 
 // serve static assets in production 
 if (process.env.NODE_ENV === 'production') {
@@ -104,3 +101,6 @@ app.use('/signup', createUser)
 app.use('/login', login)
 app.use('/api/weather', weather)
 app.use('/users', auth, users)
+app.get('/', (req, res) => {
+    res.send('Home route')
+})
