@@ -90,17 +90,17 @@ var io = require('socket.io')(server,
         cors: {
             origin: '*',
         }
-    })
+})
 
 // io.set('transports', ["websocket", "polling"]);
 
 io.on('connection', function (socket) {
     // console.log('New client connected');
-    socket.emit('news', tempMsg);
+    socket.broadcast.emit('news', tempMsg);
 });
 io.on('disconnect', function () {
     // console.log('disconnected');
-    socket.emit('disconnected');
+    socket.broadcast.emit('disconnected');
 });
 
 // Define routes 
