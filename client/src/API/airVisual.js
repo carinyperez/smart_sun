@@ -1,5 +1,4 @@
 import { airVisualKey } from './key.json';
-import { weather_api_key } from './key.json';
 
 class AirVisual {
     constructor(lat, lon) {
@@ -12,9 +11,7 @@ class AirVisual {
             header: {
                 'Access-Control-Allow-Origin': '*',
             }
-        }).then((res) => res.ok ? res.json() : Promise.reject("Error!" + res.status + res.statusText)).catch((err) => {
-            console.log(err)
-        })
+        }).then((res) => res.ok ? res.json() : Promise.reject("Error!" + res.status + res.statusText))
     }
 }
 export default AirVisual
