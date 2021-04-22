@@ -16,7 +16,7 @@ const auth = require('./middleware/auth');
 const db = require('./config/db');
 
 // connect database 
-db(); 
+db();
 // middlewares 
 app.use(express.json({ extended: false }))
 app.use(express.urlencoded({ extended: false }))
@@ -101,6 +101,4 @@ app.use('/signup', createUser)
 app.use('/login', login)
 app.use('/api/weather', weather)
 app.use('/users', auth, users)
-app.get('/', (req, res) => {
-    res.send('Home route')
-})
+
