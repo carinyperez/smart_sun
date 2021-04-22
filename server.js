@@ -15,7 +15,6 @@ const mongoose = require('mongoose');
 const auth = require('./middleware/auth');
 const db = require('./config/db');
 
-
 // connect database 
 db(); 
 // middlewares 
@@ -27,7 +26,6 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.send('Home route')
 })
-
 
 // serve static assets in production 
 if (process.env.NODE_ENV === 'production') {

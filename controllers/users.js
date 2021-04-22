@@ -24,8 +24,7 @@ module.exports.getCurrentUser = (req, res) => {
 }
 
 module.exports.createUser = (req, res) => {
-    const { email, password, name } = req.body;
-    console.log(req.body)
+    const { email, name, password } = req.body;
     if (!isEmail(email)) {
         throw new Error("Not an email | invalid data passed to the methods for creating a user")
     }
