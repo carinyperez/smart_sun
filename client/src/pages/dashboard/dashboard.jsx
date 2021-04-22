@@ -96,7 +96,7 @@ const Dashboard = ({ history }) => {
                         <p>Time spent outdoors :<span>2 hrs</span></p>
                         <p>Vitamin D Level :<span>300 UI</span></p>
                     </div>
-                    
+
                 </Card>
                 {/* <Card
                     name="water"
