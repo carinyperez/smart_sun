@@ -28,12 +28,14 @@ class Dashboard extends React.Component {
     componentDidMount() {
         if (process.env.NODE_ENV === 'development') {
             const socketClient = io.connect('http://localhost:5000/');
+            console.log(socketClient);
             socketClient.on('news', (data) => {
                 this.setState({ latitude: data.position.lat });
                 this.setState({ longitude: data.position.lng });
             })
         } else if (process.env.NODE_ENV === 'production') {
             const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
+            console.log(socketClient);
             socketClient.on('news', (data) => {
                 this.setState({ latitude: data.position.lat });
                 this.setState({ longitude: data.position.lng });
@@ -47,6 +49,7 @@ class Dashboard extends React.Component {
         }
         const airVisual = new AirVisual(this.state.latitude, this.state.longitute);
         console.log(airVisual);
+        console.log(airVisual.getInfo());
         airVisual.getInfo()
             .then((res) => {
                 console.log(res);
@@ -70,7 +73,6 @@ class Dashboard extends React.Component {
     }
     render() {
         return (
-
             <div className='dashboard' >
                 <SideBar />
                 <div className='dash-images'>

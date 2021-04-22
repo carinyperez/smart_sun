@@ -1,5 +1,10 @@
 export default class UserManagement {
-    constructor(baseUrl="https://localHost:5000/"){
+    constructor(baseUrl) {
+        if (process.env.NODE_ENV === 'development') {
+            baseUrl = "https://localHost:5000/"
+        } else {
+            baseUrl = "https://smart-sun-app.herokuapp.com/"
+        }
         this._baseUrl = baseUrl;
     }
     register(email, password, name) {
@@ -70,7 +75,7 @@ export default class UserManagement {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
             },
-            body: JSON.stringify({ avatar})
+            body: JSON.stringify({ avatar })
         })
             .then((response) => {
                 if (response.ok) {
