@@ -8,13 +8,14 @@ import WakeUp from './pages/onboarding-pages/WakeUp';
 import Dashboard from './pages/dashboard/dashboard';
 import HomePage from './pages/homepage/homepage';
 import skinAnalyzer from './pages/Skin Analyzer/skinAnalyzer';
+import Nutrition from './components/nutrition/nutrition';
 import Final from './pages/onboarding-pages/Final';
 import UserManagement from './API/UserManagement'
 import AirVisual from './API/airVisual';
 import { useEffect, useState } from 'react';
 
-const App = () => {
 
+const App = () => {
   const [username, setUserName] = useState('Blessing')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
@@ -51,6 +52,7 @@ const App = () => {
         <Route exact path='/onboarding/final' component={() => <Final />} />
         <Route exact path='/dashboard' component={() => <Dashboard name={username} />} />
         <Route path="/skinAnalyzer" component={skinAnalyzer} />
+        <Route path="/nutrition" component={Nutrition} />
       </Switch>
     </div>
   );

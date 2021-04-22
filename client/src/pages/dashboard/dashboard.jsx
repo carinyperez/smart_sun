@@ -1,28 +1,22 @@
 import react, { useState, useEffect } from 'react';
-import Weather from '../../components/weather/weather';
 import axios from 'axios';
 import './dashboard.styles.scss';
 import Clock from '../../components/clock/clock';
 import Card from '../../components/card/card';
-import foods from '../../assets/foods.png';
-import rays from '../../assets/rays.png';
-import vitamin from '../../assets/vitamin-swirl.png';
-import water from '../../assets/water.png';
-import tips from '../../assets/tips.png';
+import vitaminCircle from '../../assets/circle.png';
+import temperature2 from '../../assets/temperature2.png';
 import SideBar from '../../components/sidebar/sidebar';
 import io from 'socket.io-client';
 import AirVisual from '../../API/airVisual';
-
 
 const Dashboard = (props) => {
     const [longitute, setLongitude] = useState(-122.27);
     const [latitude, setLatitude] = useState(37.8);
     const [airPollution, setAirPollution] = useState(10);
     const [temp, setTemp] = useState(80);
-    const [city, setCity] = useState();
+    const [city, setCity] = useState('Oakland');
     useEffect(() => {
         if (process.env.NODE_ENV === 'development') {
-            // const socketClient = io.connect('http://localhost:5000/');
             const socketClient = io.connect('http://localhost:5000/', {
                 transport: ['websocket']
             })
@@ -46,8 +40,6 @@ const Dashboard = (props) => {
             const socketClient = io.connect('https://smart-sun-app.herokuapp.com/', {
                 transport: ['websocket']
             })
-            // const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
-            console.log(socketClient);
             socketClient.on('news', (data) => {
                 if (JSON.stringify(data) === '{}') {
                     console.log(`Data ${data}`);
@@ -99,25 +91,24 @@ const Dashboard = (props) => {
                     heading="Weather">
                     <p>{temp}° F</p>
                     <p>{city}</p>
-                    {/* <img src={rays} alt="temperature gauge" /> */}
+                    <img src={temperature2} alt="temperature-gauge"></img>
                 </Card>
                 <Card
                     name="track"
                     heading="SmartSun Tracker">
                     <div class="vitamin-meter">
-                        {/* <div class="border">
-                            <div class="progress" style={{ "width": "50%" }} />
-                        </div> */}
                         <p>While outside, track the
                          amount of Vitamin D exposure</p>
-                        <img src={vitamin} alt="amount of vitamin D had" />
+                        <img src={vitaminCircle} alt="amount of vitamin D had" />
+                        <button>Track</button>
                     </div>
                 </Card>
                 <Card
                     name="air-quality"
                     heading="Air quality">
-                    {/* <img src={tips} alt="air quality" /> */}
-                    <p>The air quality is {getClassName(airPollution)}</p>
+                    <p>The air quality is
+                        <br />
+                        {getClassName(airPollution)}</p>
                     <p
                         className={`${getClassName(airPollution)}`}
                     >{airPollution}</p>
@@ -130,30 +121,11 @@ const Dashboard = (props) => {
                     <h4>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
                     }</h4>
                     <div className='clock-footer'>
-                        <p>Time spent outdoors :<span>2 hrs</span></p>
+                        <p>Time spent outdoors: <span>2 hrs</span></p>
                         <p>Vitamin D Level :<span>300 UI</span></p>
                     </div>
 
                 </Card>
-                {/* <Card
-                    name="water"
-                    heading="Water Intake"
-                >
-                    <img src={water} alt="water-fill" />
-                    <h4>Take a bottle of water</h4>
-                    <p>50ml</p>
-                </Card> */}
-                {/* <Card
-                    name="meal"
-                    heading="Today's Meal">
-                    <img src={foods} alt="food circles" />
-                    <p> Egg Yolk Mushrooms Seafood</p>
-                </Card> */}
-                {/* <Card
-                    name="tips"
-                    heading="Daily Tips">
-                    <img src={tips} alt="notifications" />
-                </Card> */}
             </div>
         </div >
     )
