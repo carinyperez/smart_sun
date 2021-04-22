@@ -183,6 +183,7 @@ const Dashboard = (props) => {
             const socketClient = io.connect('https://smart-sun-app.herokuapp.com/');
             console.log(socketClient);
             socketClient.on('news', (data) => {
+                console.log(data);
                 setLatitude(data.position.lat);
                 setLongitude(data.position.lng);
             })

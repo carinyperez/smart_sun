@@ -85,22 +85,20 @@ particle.getEventStream({
 var tempMsg = { "position": { "lat": 37.8, "lng": -122.27 } }
 
 var io = require('socket.io')(server,
-    { transports: 'websocket' },
     {
         cors: {
             origin: '*',
         }
     })
 
-// io.set('transports', ["websocket", "polling"]);
 
 io.on('connection', function (socket) {
     // console.log('New client connected');
-    socket.broadcast.emit('news', tempMsg);
+    socket.emit('news', tempMsg);
 });
 io.on('disconnect', function () {
     // console.log('disconnected');
-    socket.broadcast.emit('disconnected');
+    socket.emit('disconnected');
 });
 
 // Define routes 
