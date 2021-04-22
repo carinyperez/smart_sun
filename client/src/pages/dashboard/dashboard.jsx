@@ -14,7 +14,7 @@ import io from 'socket.io-client';
 import AirVisual from '../../API/airVisual';
 
 
-const Dashboard = ({ history }) => {
+const Dashboard = (props, { history }) => {
     const [longitute, setLongitude] = useState('');
     const [latitude, setLatitude] = useState('');
     const [airPollution, setAirPollution] = useState('');
@@ -22,12 +22,18 @@ const Dashboard = ({ history }) => {
     const [city, setCity] = useState('');
     const socketClient = io.connect('http://localhost:5000/');
     useEffect(() => {
+        if(socketClient){
         socketClient.on('news', function (data) {
             setLatitude(data.position.lat);
             setLongitude(data.position.lng);
-        });
+        });}
+        if(!socketClient){
+            navigator.geolocation.getCurrentPosition((position)=>{
+                setLatitude(position.coords.latitude);
+                setLongitude(position.coords.longitute)
+            })
+        }
         const airVisual = new AirVisual(latitude, longitute);
-        console.log(airVisual);
         airVisual.getInfo()
             .then((res) => {
                 setAirPollution(res.data.current.pollution.aqius)
@@ -35,6 +41,7 @@ const Dashboard = ({ history }) => {
                 setTemp(res.data.current.weather.hu);
                 setCity(res.data.city);
             })
+            .catch(err=>{console.log(err)})
     }, [])
     const getClassName = (airPollution) => {
         if (airPollution >= 0 && airPollution <= 50) {
@@ -52,7 +59,7 @@ const Dashboard = ({ history }) => {
             <SideBar />
             <div className='dash-images'>
                 <div className='header'>
-                    <h1>Good Day Blessing</h1>
+                    <h1>Good Day {props.name}</h1>
                     <h3>Today's weather is sunny,
                     <br /> a good day to get some vitamin D</h3>
                 </div>

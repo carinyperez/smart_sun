@@ -1,9 +1,13 @@
 import react from 'react';
 import './final.styles.scss'
 import stats from '../../assets/calculated-needs.png'
+import {useHistory} from 'react-router-dom'
+
 export default function Final(props) {
-    function handleClick() {
-        props.history.push('/dashboard');
+    const history = useHistory()
+     function handleClick() {
+       // await props.onButtonClick()
+        history.push('/dashboard');
     }
     return (
         <div className="onboarding__final">
