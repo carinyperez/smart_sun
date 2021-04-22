@@ -85,6 +85,7 @@ particle.getEventStream({
 var tempMsg = { "position": { "lat": 37.8, "lng": -122.27 } }
 
 var io = require('socket.io')(server,
+    { transport: 'websocket' },
     {
         cors: {
             origin: '*',
