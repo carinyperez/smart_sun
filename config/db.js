@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 // const mongoDB = 'mongodb://localhost:27017/smartSun';
-const mongoDB = 'mongodb+srv://cariny123456:cariny123456@cluster0.zzxhq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const mongoDB = 'mongodb+srv://cariny123456:cariny123456@cluster0.zzxhq.mongodb.net/smart_sun?retryWrites=true&w=majority';
 
 const db = async () => {
     try {
