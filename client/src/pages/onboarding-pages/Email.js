@@ -13,11 +13,9 @@ const Email = (props) => {
     }
     function handleEmailChange(e) {
         setEmail(e.target.value)
-        console.log(email)
     }
     function handlePasswordChange(e) {
         setPassword(e.target.value)
-        console.log(password)
     }
     return (
         <OnboardingPage

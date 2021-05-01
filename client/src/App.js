@@ -20,15 +20,13 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   const userManagement = new UserManagement();
-  console.log(userManagement)
   function onNameClick(name) {
     setUserName(name)
-    console.log(username)
+
   }
   function onEmailPassword(email, password) {
     setEmail(email);
     setPassword(password);
-    console.log(email + password)
   }
   /* function onFinish() {
      console.log(email, password, username)

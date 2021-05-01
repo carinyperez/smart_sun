@@ -6,65 +6,44 @@ import Card from '../../components/card/card';
 import vitaminCircle from '../../assets/circle.png';
 import temperature2 from '../../assets/temperature2.png';
 import SideBar from '../../components/sidebar/sidebar';
-import io from 'socket.io-client';
 import AirVisual from '../../API/airVisual';
+import ParticleClass from '../../particle/particle';
+
 
 const Dashboard = (props) => {
-    const [longitute, setLongitude] = useState(-122.27);
-    const [latitude, setLatitude] = useState(37.8);
+    const [longitute, setLongitude] = useState('-122.293956');
+    const [latitude, setLatitude] = useState('37.8133917');
     const [airPollution, setAirPollution] = useState(10);
     const [temp, setTemp] = useState(80);
     const [city, setCity] = useState('Oakland');
-    useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            const socketClient = io.connect('http://localhost:5000/', {
-                transport: ['websocket']
-            })
-            console.log(socketClient);
-            socketClient.on('news', (data) => {
-                if (JSON.stringify(data) === '{}') {
-                    console.log(`Data ${data}`);
-                    setLatitude(data.position.lat);
-                    setLongitude(data.position.lng);
-                }
-            })
-        }
-        else {
-            navigator.geolocation.getCurrentPosition((position) => {
-                setLatitude(position.coords.latitude);
-                setLongitude(position.coords.longitute);
-            })
-        }
 
-        if (process.env.NODE_ENV === 'production') {
-            const socketClient = io.connect('https://smart-sun-app.herokuapp.com/', {
-                transport: ['websocket']
-            })
-            socketClient.on('news', (data) => {
-                if (JSON.stringify(data) === '{}') {
-                    console.log(`Data ${data}`);
-                    setLatitude(data.position.lat);
-                    setLongitude(data.position.lng);
+    const particle = new ParticleClass(); 
+    useEffect(() => {
+        particle.login();
+        async function getData() {
+            await particle.getEvent().then((res) => {
+                if(typeof(res) === 'undefined') {
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        setLatitude(position.coords.latitude);
+                        setLongitude(position.coords.longitude); 
+                    })
+                } 
+                else {
+                    setLatitude(res.position.lat);
+                    setLongitude(res.position.lng);
                 }
-            })
+            });
         }
-        else {
-            navigator.geolocation.getCurrentPosition((position) => {
-                setLatitude(position.coords.latitude);
-                setLongitude(position.coords.longitute);
-            })
-        }
+        getData(); 
         const airVisual = new AirVisual(latitude, longitute);
-        console.log(airVisual);
         airVisual.getInfo()
             .then((res) => {
                 setAirPollution(res.data.current.pollution.aqius)
-                console.log(res);
                 setTemp(res.data.current.weather.hu);
                 setCity(res.data.city);
             })
-            .catch(err => { console.log(err) })
-    }, [])
+        .catch(err => { console.log(err) })
+    }, []);
     const getClassName = (airPollution) => {
         if (airPollution >= 0 && airPollution <= 50) {
             return 'good'
