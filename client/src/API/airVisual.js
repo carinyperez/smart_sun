@@ -1,4 +1,3 @@
-// import { airVisualKey } from './key.json';
 let airVisualKey = process.env.REACT_APP_airVisualKey; 
 
 class AirVisual {

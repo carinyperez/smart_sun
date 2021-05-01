@@ -22,13 +22,14 @@
     }
     .intro-bottom {
         display: flex;
+        flex-wrap: wrap;
         width: 50%;
          background-color: #009CDF;
         // flex: 1 5 200px;
         img {
-            height: 100vh;
-            width: 100%;
-            flex: 5 5 auto;
+            height: 70vh;
+            padding: 1rem;
+            flex: 1 1 auto;
         }
     }
     
@@ -79,4 +80,44 @@ input[type="radio"]:checked + label{
 
 button{
     margin: 15px;
+
+}
+
+@media all and (max-width:600px) {
+    .intro {
+        display: flex;
+        justify-content: space-around; 
+        flex-direction: column;
+        height: 100vh;
+    }
+    .intro .intro-top {
+        height: 10vh;
+        width: 95vw;
+        justify-content: flex-start;
+        flex: none;
+    }
+    .intro-bottom {
+        display: flex; 
+        margin: 15%;
+        width: 65vw !important;
+        border: solid 10px goldenrod;
+        
+    }
+    
+    img {
+        height: auto; 
+        width: auto; 
+        max-width: 400px; 
+        max-height: 400px; 
+    }
+    .progress-bar {
+        position: static;
+    }
+    .intro .intro-top input {
+        width: 20vw;
+    }
+    .progress-background {
+        width: 70%;
+    }
+
 }
