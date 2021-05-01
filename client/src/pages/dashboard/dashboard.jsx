@@ -96,7 +96,7 @@ const Dashboard = (props) => {
                     name="clock"
                     heading="Time for Vitamin D">
 
-                    <Clock className='clock' />
+                    {/* <Clock className='clock' /> */}
                     <h4>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })
                     }</h4>
                     <div className='clock-footer'>

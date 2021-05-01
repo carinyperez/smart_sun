@@ -1,12 +1,11 @@
 .dashboard {
     display: flex;
     .dash-text {
-        padding: 0;
+        padding: 1rem;
         width: 20vw;
         flex: 1 1 auto;
-        // border: 10px red solid;
         background-color: #009CDF;
-        display: flex; 
+        display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-end;
@@ -32,9 +31,10 @@
         background-color: #e5e5e5;
         // border: 10px yellow solid;
         width: 80vw;
+        height: 100vh;
         display: flex; 
         flex-wrap: wrap;
-        flex: auto;
+        flex:auto;
         align-content: flex-start;
         justify-content: space-around;
 
@@ -89,7 +89,7 @@
     
         .dash-card {
             position: relative;
-            flex:  1 1 30%; 
+            flex:  1 1 40%; 
             margin: 20px 20px;
             background-color: white;
             h3 {
@@ -185,5 +185,5 @@
 
 .fDeflT {
     margin : 0% -5%;
+    background-color: solid 10px goldenrod !important;
 }
-
