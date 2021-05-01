@@ -7,7 +7,7 @@ import skinChart from '../../assets/skinAnalyzed.png';
 export default function skinAnalyzer() {
     return (<div className="skin">
         <SideBar />
-        <div>
+        <div class='video'>
             <div className="video-container">
                 <Webcam
                     mirrored="true" />
